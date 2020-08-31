@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 
 class OTPVerifyScreen extends StatelessWidget {
-  static String routeName = "/verify-otp";
+  static const String routeName = "/verify-otp";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,8 +1,8 @@
+import 'package:E_Parcel/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
 import '../../../constants.dart';
-import '../../../screens/home/home_screen.dart';
 import '../../../components/default_button.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:device_info/device_info.dart';

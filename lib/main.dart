@@ -1,8 +1,9 @@
+import 'package:E_Parcel/screens/main/main_screen.dart';
+
 import './theme.dart';
 import './routes.dart';
 
-import './screens/splash/splash_screen.dart';
-import './screens/home/home_screen.dart';
+// import './screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
