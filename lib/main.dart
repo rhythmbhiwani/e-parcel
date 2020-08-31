@@ -1,9 +1,7 @@
-import 'package:E_Parcel/screens/main/main_screen.dart';
-
 import './theme.dart';
 import './routes.dart';
 
-// import './screens/splash/splash_screen.dart';
+import './screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -25,7 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'E-Parcel',
       theme: theme(),
-      initialRoute: HomeScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       routes: routes,
     );
   }

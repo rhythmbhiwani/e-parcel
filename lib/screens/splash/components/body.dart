@@ -17,18 +17,15 @@ class _BodyState extends State<Body> {
   List<Map<String, String>> splashData = [
     {
       "text": "JUST FILL THE FORM",
-      "lottie":
-          "https://firebasestorage.googleapis.com/v0/b/delivery-demo-db26c.appspot.com/o/delivery_1.json?alt=media&token=819f5e70-9929-4a79-aa9b-462d3fcdad1b",
+      "lottie": "assets/animations/delivery_1.json",
     },
     {
       "text": "WE PICKUP THE PACKAGE",
-      "lottie":
-          "https://firebasestorage.googleapis.com/v0/b/delivery-demo-db26c.appspot.com/o/delivery_2.json?alt=media&token=07110c42-7b65-4549-8c2e-7611c776d7bf",
+      "lottie": "assets/animations/delivery_2.json",
     },
     {
       "text": "AND DELIVER IT SAFELY",
-      "lottie":
-          "https://firebasestorage.googleapis.com/v0/b/delivery-demo-db26c.appspot.com/o/delivery_3.json?alt=media&token=9dd778db-d0ac-4406-a2a5-29d4fd51505f",
+      "lottie": "assets/animations/delivery_3.json",
     }
   ];
   @override

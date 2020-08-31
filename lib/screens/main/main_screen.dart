@@ -1,31 +1,22 @@
+import '../../components/body.dart';
+import '../../size_config.dart';
+import 'get_widgets.dart';
+
+import 'package:flutter/material.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 
-import '../../components/body.dart';
-
-import '../../size_config.dart';
-import 'package:flutter/material.dart';
-import 'package:condition/condition.dart';
-
-enum AllScreens {
-  about,
-  dashboard,
-  book,
-  history,
-  help,
-}
-
-class HomeScreen extends StatefulWidget {
+class MainScreen extends StatefulWidget {
   static const String routeName = "/main";
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MainScreenState extends State<MainScreen> {
   bool needBottomNavbar = true;
   Widget widgetHolder;
   void initState() {
-    widgetHolder = dashboardWidget();
+    widgetHolder = GetWidgets.dashboardWidget();
     super.initState();
   }
 
@@ -34,50 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
       needBottomNavbar = bottomNavBar;
       widgetHolder = newWidget;
     });
-  }
-
-  Widget dashboardWidget() {
-    return Container(
-      color: Colors.white,
-      child: Center(
-        child: FlatButton(
-          color: Colors.blue,
-          textColor: Colors.white,
-          padding: EdgeInsets.all(8.0),
-          splashColor: Colors.blueAccent,
-          onPressed: () {
-            setState(() {
-              widgetHolder = secondWidget();
-            });
-          },
-          child: Text(
-            "Dashboard Widget",
-            style: TextStyle(fontSize: 20.0),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget secondWidget() {
-    return Container(
-      color: Colors.grey,
-      child: Center(
-        child: FlatButton(
-          color: Colors.blue,
-          textColor: Colors.white,
-          padding: EdgeInsets.all(8.0),
-          splashColor: Colors.blueAccent,
-          onPressed: () {
-            changeWidget(dashboardWidget(), true);
-          },
-          child: Text(
-            "Second Widget",
-            style: TextStyle(fontSize: 20.0),
-          ),
-        ),
-      ),
-    );
   }
 
   @override
@@ -96,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   FancyBottomNavigation buildFancyBottomNavigation() {
     return FancyBottomNavigation(
       inactiveIconColor: Colors.grey,
+      initialSelection: 0,
       tabs: [
         TabData(iconData: Icons.dashboard, title: "Dashboard"),
         TabData(iconData: Icons.add_circle, title: "Book"),
@@ -103,23 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
       onTabChangedListener: (position) {
         if (position == 0) {
-          changeWidget(
-              Container(
-                decoration: BoxDecoration(color: Colors.red),
-              ),
-              true);
+          changeWidget(GetWidgets.dashboardWidget(), true);
         } else if (position == 1) {
-          changeWidget(
-              Container(
-                decoration: BoxDecoration(color: Colors.blue),
-              ),
-              true);
+          changeWidget(GetWidgets.bookWidget(), true);
         } else if (position == 2) {
-          changeWidget(
-              Container(
-                decoration: BoxDecoration(color: Colors.yellow),
-              ),
-              true);
+          changeWidget(GetWidgets.historyWidget(), true);
         }
       },
     );

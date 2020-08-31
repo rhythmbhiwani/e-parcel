@@ -1,9 +1,9 @@
-import 'package:E_Parcel/components/drawer/drawer_painter.dart';
-import 'package:E_Parcel/components/drawer/side_bar_button.dart';
-import 'package:E_Parcel/screens/about/about_screen.dart';
-import 'package:E_Parcel/size_config.dart';
-import 'package:lottie/lottie.dart';
+import './drawer/drawer_painter.dart';
+import './drawer/side_bar_button.dart';
+import '../screens/main/get_widgets.dart';
+import '../size_config.dart';
 
+import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 
 class Body extends StatefulWidget {
@@ -65,11 +65,6 @@ class _BodyState extends State<Body> {
 
     return SafeArea(
         child: Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Color.fromRGBO(255, 65, 108, 1.0),
-        Color.fromRGBO(255, 75, 73, 1.0)
-      ])),
       width: mediaQuery.width,
       child: SafeArea(
         child: Stack(
@@ -89,7 +84,7 @@ class _BodyState extends State<Body> {
                   brightness: Brightness.light,
                 ),
               ),
-              body: widget.bodyContent,
+              body: SingleChildScrollView(child: widget.bodyContent),
               bottomNavigationBar: widget.needBottomNavbar == true
                   ? widget.buildFancyBottomNavigation()
                   : null,
@@ -231,11 +226,7 @@ class _BodyState extends State<Body> {
             height: (menuContainerHeight) / 5,
             onPressed: () {
               isMenuOpen = false;
-              widget.changeWidget(
-                  Container(
-                    decoration: BoxDecoration(color: Colors.brown),
-                  ),
-                  true);
+              widget.changeWidget(GetWidgets.dashboardWidget(), true);
             },
           ),
           SideBarButton(
@@ -251,11 +242,7 @@ class _BodyState extends State<Body> {
             height: (mediaQuery.height / 2) / 5,
             onPressed: () {
               isMenuOpen = false;
-              widget.changeWidget(
-                  Container(
-                    decoration: BoxDecoration(color: Colors.purple),
-                  ),
-                  false);
+              widget.changeWidget(GetWidgets.aboutWidget(), false);
             },
           ),
           SideBarButton(
@@ -264,11 +251,8 @@ class _BodyState extends State<Body> {
             textSize: getSize(3),
             height: (menuContainerHeight) / 5,
             onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                AboutScreen.routeName,
-                (Route<dynamic> route) => false,
-              );
+              isMenuOpen = false;
+              widget.changeWidget(GetWidgets.helpWidget(), false);
             },
           ),
           SideBarButton(

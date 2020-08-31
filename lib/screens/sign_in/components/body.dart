@@ -1,4 +1,4 @@
-import 'package:E_Parcel/screens/opt_verify/opt_verify_screen.dart';
+import '../../../screens/opt_verify/opt_verify_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/services.dart';
 

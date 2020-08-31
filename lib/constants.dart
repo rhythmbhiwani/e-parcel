@@ -1,4 +1,4 @@
-import 'package:E_Parcel/size_config.dart';
+import './size_config.dart';
 import 'package:flutter/material.dart';
 
 const kPrimaryColor = Color(0xFFF3662D);

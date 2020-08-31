@@ -1,9 +1,9 @@
-import 'package:E_Parcel/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
 import '../../../constants.dart';
 import '../../../components/default_button.dart';
+import '../../../screens/main/main_screen.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:device_info/device_info.dart';
 
@@ -41,7 +41,7 @@ class Body extends StatelessWidget {
                   text: "Verify",
                   press: () {
                     Navigator.pushNamedAndRemoveUntil(context,
-                        HomeScreen.routeName, (Route<dynamic> route) => false);
+                        MainScreen.routeName, (Route<dynamic> route) => false);
                   },
                 ),
               ),

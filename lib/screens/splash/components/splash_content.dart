@@ -17,7 +17,7 @@ class SplashContent extends StatelessWidget {
       children: <Widget>[
         Spacer(flex: 2),
         Container(
-          child: Lottie.network(lottijson),
+          child: Lottie.asset(lottijson),
           height: getProportionateScreenHeight(265),
           width: getProportionateScreenWidth(300),
         ),
