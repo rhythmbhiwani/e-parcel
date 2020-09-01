@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'components/about.dart';
 import 'components/book.dart';
+import 'components/settings.dart';
 import 'components/dashboard.dart';
 import 'components/help.dart';
 import 'components/history.dart';
@@ -14,6 +15,10 @@ class GetWidgets {
 
   static Widget aboutWidget() {
     return About();
+  }
+
+  static Widget settingsWidget() {
+    return Settings();
   }
 
   static Widget bookWidget() {

@@ -84,7 +84,7 @@ class _BodyState extends State<Body> {
                   brightness: Brightness.light,
                 ),
               ),
-              body: SingleChildScrollView(child: widget.bodyContent),
+              body: widget.bodyContent,
               bottomNavigationBar: widget.needBottomNavbar == true
                   ? widget.buildFancyBottomNavigation()
                   : null,
@@ -125,7 +125,7 @@ class _BodyState extends State<Body> {
         );
       },
       child: Lottie.asset(
-        'assets/animations/notification-bell.json',
+        'assets/animations/notification-bell_light_mode.json',
         fit: BoxFit.contain,
         width: getProportionateScreenWidth(100),
         height: getProportionateScreenHeight(70),
@@ -230,10 +230,14 @@ class _BodyState extends State<Body> {
             },
           ),
           SideBarButton(
-            text: "Payments",
-            iconData: Icons.payment,
+            text: "Settings",
+            iconData: Icons.settings,
             textSize: getSize(1),
             height: (menuContainerHeight) / 5,
+            onPressed: () {
+              isMenuOpen = false;
+              widget.changeWidget(GetWidgets.settingsWidget(), false);
+            },
           ),
           SideBarButton(
             text: "About",
