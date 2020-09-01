@@ -42,11 +42,15 @@ class _MainScreenState extends State<MainScreen> {
 
   FancyBottomNavigation buildFancyBottomNavigation() {
     return FancyBottomNavigation(
-      inactiveIconColor: Colors.grey,
-      initialSelection: 0,
+      initialSelection: 1,
       tabs: [
         TabData(iconData: Icons.dashboard, title: "Dashboard"),
-        TabData(iconData: Icons.add_circle, title: "Book"),
+        TabData(
+            iconData: Icons.add_circle,
+            title: "Book",
+            onclick: () {
+              changeWidget(GetWidgets.bookWidget(), true);
+            }),
         TabData(iconData: Icons.history, title: "History")
       ],
       onTabChangedListener: (position) {

@@ -8,7 +8,7 @@ class Dashboard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: 75,
+          height: 65,
           width: double.infinity,
           padding: EdgeInsets.only(left: getProportionateScreenWidth(40)),
           child: Text(
@@ -22,12 +22,33 @@ class Dashboard extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: ListView(
-            children: [
-              Center(
-                child: Text("ABOUT"),
-              ),
-            ],
+          child: ListView.builder(
+            physics: BouncingScrollPhysics(),
+            itemCount: 1,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 0),
+                    child:
+                        Image.asset("assets/animations/ready_for_service.gif"),
+                  ),
+                  Text(
+                    "We are ready at your service",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: getProportionateScreenWidth(20)),
+                  ),
+                  Text(
+                    "Click + to start booking with us",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: getProportionateScreenWidth(16)),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                ],
+              );
+            },
           ),
         )
       ],

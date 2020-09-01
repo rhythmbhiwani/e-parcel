@@ -29,6 +29,7 @@ class Settings extends StatelessWidget {
           child: ListView(
             children: [
               buildSettingOption("Dark Mode"),
+              SizedBox(height: 10),
               buildSettingOption("Push Notifications"),
             ],
           ),
