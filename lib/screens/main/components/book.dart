@@ -1,3 +1,4 @@
+import 'package:E_Parcel/screens/address/enter_address_screen.dart';
 import 'package:E_Parcel/screens/main/components/mini_components/dash.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
@@ -76,7 +77,14 @@ class Book extends StatelessWidget {
                           child: Column(
                             children: [
                               buildAddAddressArea(
-                                  add: () {}, heading: "PICKUP"),
+                                  add: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      EnterAddressScreen.routeName,
+                                      arguments: "pickup",
+                                    );
+                                  },
+                                  heading: "PICKUP"),
                               Container(
                                 height: 10,
                                 padding: const EdgeInsets.only(left: 10),
@@ -88,7 +96,15 @@ class Book extends StatelessWidget {
                                   length: 250,
                                 ),
                               ),
-                              buildAddAddressArea(add: () {}, heading: "DROP"),
+                              buildAddAddressArea(
+                                  add: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      EnterAddressScreen.routeName,
+                                      arguments: "drop",
+                                    );
+                                  },
+                                  heading: "DROP"),
                             ],
                           ),
                         )
