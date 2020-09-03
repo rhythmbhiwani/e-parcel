@@ -36,6 +36,7 @@ dependencies:
   animated_text_kit: ^2.2.0
   fancy_bottom_navigation: ^0.3.2
   contact_picker: ^0.0.2
+  flutter_swiper: ^1.1.6
   
 
 dev_dependencies:
