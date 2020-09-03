@@ -1,3 +1,6 @@
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../constants.dart';
 import './drawer/drawer_painter.dart';
 import './drawer/side_bar_button.dart';
 import '../screens/main/get_widgets.dart';
@@ -77,6 +80,10 @@ class _BodyState extends State<Body> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       buildAppBarHamburgerIcon(),
+                      SvgPicture.asset(
+                        logoPath,
+                        width: 80,
+                      ),
                       buildAppDrawerNotificationButton(context)
                     ],
                   ),
@@ -198,13 +205,25 @@ class _BodyState extends State<Body> {
       child: Center(
         child: Column(
           children: <Widget>[
-            Image.asset(
-              "assets/images/splash_1.png",
-              width: sidebarSize / 2,
+            Container(
+              width: sidebarSize / 2.5,
+              height: sidebarSize / 2.5,
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(100)),
+              child: SvgPicture.asset(
+                logoPath,
+                width: sidebarSize / 2,
+                colorBlendMode: BlendMode.lighten,
+              ),
             ),
+            SizedBox(height: 10),
             Text(
-              "E-PARCEL",
-              style: TextStyle(color: Color(0xFFECECEC)),
+              "OZONE PARCEL",
+              style: TextStyle(
+                  color: Color(0xFFECECEC),
+                  fontSize: getProportionateScreenWidth(18)),
             ),
           ],
         ),

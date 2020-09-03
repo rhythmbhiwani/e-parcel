@@ -1,3 +1,5 @@
+import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../constants.dart';
 import './components/body.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +23,9 @@ class SignInScreen extends StatelessWidget {
       ),
       title: Hero(
         tag: "app_name",
-        child: Text(
-          "E-PARCEL",
-          style: TextStyle(color: kPrimaryColor),
+        child: SvgPicture.asset(
+          logoPath,
+          width: 80,
         ),
       ),
     );

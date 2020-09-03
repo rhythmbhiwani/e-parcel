@@ -1,3 +1,5 @@
+import 'package:flutter_svg/flutter_svg.dart';
+
 import './components/body.dart';
 import 'package:flutter/material.dart';
 
@@ -20,9 +22,9 @@ class OTPVerifyScreen extends StatelessWidget {
         icon: Icon(Icons.arrow_back_ios, color: kPrimaryColor),
         onPressed: () => Navigator.of(context).pop(),
       ),
-      title: Text(
-        "E-PARCEL",
-        style: TextStyle(color: kPrimaryColor),
+      title: SvgPicture.asset(
+        logoPath,
+        width: 80,
       ),
     );
   }

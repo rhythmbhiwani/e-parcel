@@ -1,4 +1,5 @@
 import 'package:E_Parcel/screens/address/enter_address_screen.dart';
+import 'package:E_Parcel/screens/confirm_order/confirm_order_screen.dart';
 
 import './screens/main/main_screen.dart';
 import './screens/opt_verify/opt_verify_screen.dart';
@@ -13,4 +14,5 @@ final Map<String, WidgetBuilder> routes = {
   OTPVerifyScreen.routeName: (_) => OTPVerifyScreen(),
   MainScreen.routeName: (_) => MainScreen(),
   EnterAddressScreen.routeName: (_) => EnterAddressScreen(),
+  ConfirmOrderScreen.routeName: (_) => ConfirmOrderScreen(),
 };

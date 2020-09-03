@@ -1,5 +1,7 @@
 import 'package:E_Parcel/components/default_button.dart';
+import 'package:E_Parcel/constants.dart';
 import 'package:E_Parcel/screens/address/enter_address_screen.dart';
+import 'package:E_Parcel/screens/confirm_order/confirm_order_screen.dart';
 import 'package:E_Parcel/screens/main/components/mini_components/dash.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -39,12 +41,12 @@ class Book extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     margin: EdgeInsets.only(bottom: 20),
-                    height: 120,
+                    height: 80,
                     child: Swiper(
                       autoplay: true,
                       itemBuilder: (BuildContext context, int index) {
                         List<String> headings = [
-                          "No Purchase",
+                          "We Don't Buy",
                           "Easy Cash Payment",
                           "Max Weight"
                         ];
@@ -64,17 +66,18 @@ class Book extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Color(0xFFF8F8F8),
                               border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10),
                             ),
                             child: Row(
                               children: [
                                 Container(
-                                  height: 70,
-                                  width: (constraints.maxWidth - 2) * 0.30,
-                                  child: SvgPicture.asset(icons[index]),
+                                  height: 40,
+                                  width: (constraints.maxWidth - 2) * 0.20,
+                                  child: SvgPicture.asset(
+                                    icons[index],
+                                  ),
                                 ),
                                 Container(
-                                  width: (constraints.maxWidth - 2) * 0.70,
+                                  width: (constraints.maxWidth - 2) * 0.80,
                                   padding: EdgeInsets.symmetric(horizontal: 10),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -85,10 +88,17 @@ class Book extends StatelessWidget {
                                         headings[index],
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 18,
+                                          fontSize:
+                                              getProportionateScreenWidth(15),
                                         ),
                                       ),
-                                      Text(subtitle[index]),
+                                      Text(
+                                        subtitle[index],
+                                        style: TextStyle(
+                                          fontSize:
+                                              getProportionateScreenWidth(10),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -127,7 +137,7 @@ class Book extends StatelessWidget {
                             children: [
                               Lottie.asset(
                                   "assets/animations/green_locator.json",
-                                  height: 70),
+                                  height: getProportionateScreenHeight(60)),
                               Center(
                                 child: Dash(
                                   dashColor: Colors.grey,
@@ -137,7 +147,7 @@ class Book extends StatelessWidget {
                                 ),
                               ),
                               Lottie.asset("assets/animations/red_locator.json",
-                                  height: 60),
+                                  height: getProportionateScreenHeight(60)),
                             ],
                           ),
                         ),
@@ -181,7 +191,39 @@ class Book extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20),
-                  buildPackagingSelectionArea(context)
+                  buildPackagingSelectionArea(context),
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(bottom: 30, top: 20),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              width: constraints.maxWidth * 0.50,
+                              child: Text("By continuing you agree to our T&C"),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: getProportionateScreenWidth(10)),
+                              width: constraints.maxWidth * 0.50,
+                              child: DefaultButton(
+                                textSize: 14,
+                                text: "Save & Proceed",
+                                press: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    ConfirmOrderScreen.routeName,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
                 ],
               );
             },
@@ -201,7 +243,7 @@ class Book extends StatelessWidget {
             color: Colors.grey,
             blurRadius: 1.0,
             spreadRadius: 0.0,
-            offset: Offset(2.0, 2.0), // shadow direction: bottom right
+            offset: Offset(2.0, 2.0),
           )
         ],
       ),
@@ -213,7 +255,7 @@ class Book extends StatelessWidget {
             alignment: Alignment.center,
             child: SvgPicture.asset(
               "assets/icons/packaging.svg",
-              height: 70,
+              height: getProportionateScreenHeight(70),
             ),
           ),
           Container(
@@ -227,7 +269,7 @@ class Book extends StatelessWidget {
                   child: Text(
                     "PACKAGE TYPE",
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: getProportionateScreenWidth(16),
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
@@ -259,7 +301,7 @@ class Book extends StatelessWidget {
             Text(
               heading,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: getProportionateScreenWidth(16),
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
@@ -267,12 +309,19 @@ class Book extends StatelessWidget {
             Text(
               "1600 Amphitheatre Pkwy, Mountain View, CA 94043, United States",
               overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: getProportionateScreenWidth(14)),
             ),
             FlatButton.icon(
                 padding: EdgeInsets.only(left: -10),
                 textColor: Colors.blue,
-                label: Text("Add Details"),
-                icon: Icon(Icons.add_circle_outline),
+                label: Text(
+                  "Add Details",
+                  style: TextStyle(fontSize: getProportionateScreenWidth(14)),
+                ),
+                icon: Icon(
+                  Icons.add_circle_outline,
+                  size: getProportionateScreenWidth(20),
+                ),
                 onPressed: add)
           ],
         ),
@@ -289,7 +338,8 @@ class PackageTypeSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _showModalBottomSheet(context) {
-      showModalBottomSheet(
+      showModalBottomSheet<dynamic>(
+        isScrollControlled: true,
         context: context,
         builder: (context) {
           return Container(
@@ -306,97 +356,7 @@ class PackageTypeSelector extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               itemCount: 1,
               itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 20,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Select Category",
-                                style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(20),
-                                  color: Colors.black,
-                                ),
-                              ),
-                              Text("Select the items to send"),
-                            ],
-                          ),
-                          SvgPicture.asset(
-                            "assets/icons/delivery-list.svg",
-                            height: 50,
-                          ),
-                        ],
-                      ),
-                    ),
-                    CheckboxListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 60),
-                      secondary: Icon(Icons.fastfood),
-                      title: Text("Food"),
-                      value: false,
-                      onChanged: null,
-                    ),
-                    CheckboxListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 60),
-                      secondary: Icon(Icons.accessibility_new),
-                      title: Text("Clothes"),
-                      value: true,
-                      onChanged: null,
-                    ),
-                    CheckboxListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 60),
-                      secondary: Icon(Icons.business_center),
-                      title: Text("Documents"),
-                      value: false,
-                      onChanged: null,
-                    ),
-                    CheckboxListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 60),
-                      secondary: Icon(Icons.shopping_basket),
-                      title: Text("Groceries"),
-                      value: true,
-                      onChanged: null,
-                    ),
-                    CheckboxListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 60),
-                      secondary: Icon(Icons.accessible),
-                      title: Text("Medicines"),
-                      value: false,
-                      onChanged: null,
-                    ),
-                    CheckboxListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 60),
-                      secondary: Icon(Icons.laptop_mac),
-                      title: Text("Electronics"),
-                      value: true,
-                      onChanged: null,
-                    ),
-                    CheckboxListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 60),
-                      secondary: Icon(Icons.assignment),
-                      title: Text("Others"),
-                      value: false,
-                      onChanged: null,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 60, vertical: 20),
-                      child: DefaultButton(
-                        text: "Save & Continue",
-                        press: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ),
-                  ],
-                );
+                return PackageCategoriesList();
               },
             ),
           );
@@ -433,5 +393,164 @@ class PackageTypeSelector extends StatelessWidget {
             ],
           ),
         ));
+  }
+}
+
+class PackageCategoriesList extends StatefulWidget {
+  const PackageCategoriesList({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _PackageCategoriesListState createState() => _PackageCategoriesListState();
+}
+
+class _PackageCategoriesListState extends State<PackageCategoriesList> {
+  List<bool> categories = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 5,
+            vertical: 10,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Select Category",
+                    style: TextStyle(
+                      fontSize: getProportionateScreenWidth(18),
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text("Select the items to send"),
+                ],
+              ),
+              SvgPicture.asset(
+                "assets/icons/delivery-list.svg",
+                height: 40,
+              ),
+            ],
+          ),
+        ),
+        CheckboxListTile(
+          activeColor: kPrimaryColor,
+          dense: true,
+          contentPadding: EdgeInsets.symmetric(horizontal: 60),
+          secondary: Icon(Icons.fastfood),
+          title: Text("Food"),
+          value: categories[0],
+          onChanged: (value) {
+            setState(() {
+              categories[0] = value;
+            });
+          },
+        ),
+        CheckboxListTile(
+          dense: true,
+          activeColor: kPrimaryColor,
+          contentPadding: EdgeInsets.symmetric(horizontal: 60),
+          secondary: Icon(Icons.accessibility_new),
+          title: Text("Clothes"),
+          value: categories[1],
+          onChanged: (value) {
+            setState(() {
+              categories[1] = value;
+            });
+          },
+        ),
+        CheckboxListTile(
+          dense: true,
+          activeColor: kPrimaryColor,
+          contentPadding: EdgeInsets.symmetric(horizontal: 60),
+          secondary: Icon(Icons.business_center),
+          title: Text("Documents"),
+          value: categories[2],
+          onChanged: (value) {
+            setState(() {
+              categories[2] = value;
+            });
+          },
+        ),
+        CheckboxListTile(
+          dense: true,
+          activeColor: kPrimaryColor,
+          contentPadding: EdgeInsets.symmetric(horizontal: 60),
+          secondary: Icon(Icons.shopping_basket),
+          title: Text("Groceries"),
+          value: categories[3],
+          onChanged: (value) {
+            setState(() {
+              categories[3] = value;
+            });
+          },
+        ),
+        CheckboxListTile(
+          dense: true,
+          activeColor: kPrimaryColor,
+          contentPadding: EdgeInsets.symmetric(horizontal: 60),
+          secondary: Icon(Icons.accessible),
+          title: Text("Medicines"),
+          value: categories[4],
+          onChanged: (value) {
+            setState(() {
+              categories[4] = value;
+            });
+          },
+        ),
+        CheckboxListTile(
+          dense: true,
+          activeColor: kPrimaryColor,
+          contentPadding: EdgeInsets.symmetric(horizontal: 60),
+          secondary: Icon(Icons.laptop_mac),
+          title: Text("Electronics"),
+          value: categories[5],
+          onChanged: (value) {
+            setState(() {
+              categories[5] = value;
+            });
+          },
+        ),
+        CheckboxListTile(
+          dense: true,
+          activeColor: kPrimaryColor,
+          contentPadding: EdgeInsets.symmetric(horizontal: 60),
+          secondary: Icon(Icons.assignment),
+          title: Text("Others"),
+          value: categories[6],
+          onChanged: (value) {
+            setState(() {
+              categories[6] = value;
+            });
+          },
+        ),
+        Container(
+          padding:
+              const EdgeInsets.only(left: 60, right: 60, top: 5, bottom: 20),
+          child: DefaultButton(
+            textSize: 14,
+            borderRadius: 10,
+            text: "Save & Continue",
+            press: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
+      ],
+    );
   }
 }

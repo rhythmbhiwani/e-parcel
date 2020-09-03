@@ -4,17 +4,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants.dart';
 import 'components/body.dart';
 
-class EnterAddressScreen extends StatelessWidget {
-  static const String routeName = "/enter-address";
+class ConfirmOrderScreen extends StatelessWidget {
+  static const String routeName = "/confirm-order";
 
   @override
   Widget build(BuildContext context) {
-    final type = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Body(
-        type: type,
-      ),
+      body: Body(),
     );
   }
 

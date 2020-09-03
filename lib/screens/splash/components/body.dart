@@ -1,3 +1,5 @@
+import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../screens/sign_in/sign_in_screen.dart';
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
@@ -38,15 +40,12 @@ class _BodyState extends State<Body> {
             Spacer(),
             Hero(
               tag: "app_name",
-              child: Text(
-                "E-PARCEL",
-                style: TextStyle(
-                  fontSize: getProportionateScreenWidth(36),
-                  color: kPrimaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: SvgPicture.asset(
+                logoPath,
+                width: getProportionateScreenWidth(200),
               ),
             ),
+            SizedBox(height: 5),
             Text(
               "Indian Local Transport Service",
               textAlign: TextAlign.center,
@@ -55,6 +54,7 @@ class _BodyState extends State<Body> {
             Expanded(
               flex: 3,
               child: PageView.builder(
+                physics: BouncingScrollPhysics(),
                 onPageChanged: (value) {
                   setState(() {
                     currentPage = value;

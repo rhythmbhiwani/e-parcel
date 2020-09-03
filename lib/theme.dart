@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
+import 'helpers/custom_transition.dart';
 
 ThemeData theme() {
   return ThemeData(
+    pageTransitionsTheme: PageTransitionsTheme(
+        builders: {TargetPlatform.android: CustomPageTransitionBuilder()}),
     scaffoldBackgroundColor: Colors.white,
     fontFamily: "Muli",
     primaryColor: kPrimaryColor,
