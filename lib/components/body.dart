@@ -206,12 +206,12 @@ class _BodyState extends State<Body> {
         child: Column(
           children: <Widget>[
             Container(
-              width: sidebarSize / 2.5,
-              height: sidebarSize / 2.5,
+              // width: sidebarSize / 2.5,
+              // height: sidebarSize / 2.5,
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(100)),
+                color: kPrimaryColor,
+              ),
               child: SvgPicture.asset(
                 logoPath,
                 width: sidebarSize / 2,

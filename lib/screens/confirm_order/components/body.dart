@@ -44,6 +44,7 @@ class Body extends StatelessWidget {
                         },
                       ),
                     ),
+                    Divider(),
                     Container(
                       height: 200,
                       width: double.infinity,
@@ -103,24 +104,66 @@ class Body extends StatelessWidget {
                         },
                       ),
                     ),
+                    Divider(),
+                    PaymentLocationSelector(),
+                    Divider(),
                     Container(
-                      height: 200,
-                      decoration: BoxDecoration(color: Colors.green),
+                      height: 100,
+                      width: double.infinity,
                       child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Row(
-                            children: [
-                              Container(
-                                width: constraints.maxWidth * 0.30,
+                        builder: (context, constraints) => Row(
+                          children: [
+                            Container(
+                              width: constraints.maxWidth * 0.50,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 40),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "FARE:",
+                                      style: TextStyle(
+                                        fontSize:
+                                            getProportionateScreenWidth(15),
+                                      ),
+                                    ),
+                                    Text(
+                                      "40₹",
+                                      style: TextStyle(
+                                          fontSize:
+                                              getProportionateScreenWidth(23),
+                                          color: Colors.black),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          );
-                        },
+                            ),
+                            Container(
+                              width: constraints.maxWidth * 0.41,
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: getProportionateScreenWidth(10)),
+                              child: RaisedButton(
+                                color: kPrimaryColor,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: getProportionateScreenWidth(14),
+                                    vertical: getProportionateScreenHeight(14)),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                animationDuration: Duration(microseconds: 1000),
+                                child: Text(
+                                  "Request Pickup",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      height: 200,
-                      decoration: BoxDecoration(color: Colors.red),
                     ),
                   ],
                 );
@@ -171,6 +214,109 @@ class Body extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class PaymentLocationSelector extends StatefulWidget {
+  const PaymentLocationSelector({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _PaymentLocationSelectorState createState() =>
+      _PaymentLocationSelectorState();
+}
+
+class _PaymentLocationSelectorState extends State<PaymentLocationSelector> {
+  bool btnPickup = true;
+  bool btnDrop = false;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 130,
+      width: double.infinity,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            children: [
+              Text(
+                "PAYMENT AT",
+                style: TextStyle(
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: getProportionateScreenWidth(20)),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin:
+                        EdgeInsets.only(top: getProportionateScreenHeight(20)),
+                    child: RaisedButton(
+                      animationDuration: Duration(microseconds: 1000),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(40),
+                          vertical: getProportionateScreenHeight(12)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            topLeft: Radius.circular(20)),
+                      ),
+                      color: btnPickup ? kPrimaryColor : Color(0xFFF2F2F2),
+                      onPressed: () {
+                        setState(() {
+                          btnDrop = false;
+                          btnPickup = true;
+                        });
+                      },
+                      child: Text(
+                        "PICKUP",
+                        style: TextStyle(
+                            fontSize: getProportionateScreenWidth(16),
+                            fontWeight: FontWeight.bold,
+                            color: btnPickup ? Colors.white : Colors.black),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                        right: getProportionateScreenWidth(20),
+                        top: getProportionateScreenHeight(20)),
+                    child: RaisedButton(
+                      animationDuration: Duration(microseconds: 1000),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(45),
+                          vertical: getProportionateScreenHeight(12)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20)),
+                      ),
+                      color: btnDrop ? kPrimaryColor : Color(0xFFF2F2F2),
+                      onPressed: () {
+                        setState(() {
+                          btnDrop = true;
+                          btnPickup = false;
+                        });
+                      },
+                      child: Text(
+                        "DROP",
+                        style: TextStyle(
+                          fontSize: getProportionateScreenWidth(16),
+                          fontWeight: FontWeight.bold,
+                          color: btnDrop ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          );
+        },
       ),
     );
   }

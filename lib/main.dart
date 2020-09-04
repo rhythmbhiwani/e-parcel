@@ -1,4 +1,8 @@
-import 'package:E_Parcel/screens/main/main_screen.dart';
+// import 'package:E_Parcel/screens/main/main_screen.dart';
+import 'dart:async';
+
+import 'package:E_Parcel/screens/shortSplash/short_splash.dart';
+import 'package:E_Parcel/screens/splash/splash_screen.dart';
 
 import './theme.dart';
 import './routes.dart';
@@ -25,8 +29,27 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'E-Parcel',
       theme: theme(),
-      initialRoute: MainScreen.routeName,
+      home: SplashNavigator(),
       routes: routes,
     );
+  }
+}
+
+class SplashNavigator extends StatefulWidget {
+  @override
+  _SplashNavigatorState createState() => _SplashNavigatorState();
+}
+
+class _SplashNavigatorState extends State<SplashNavigator> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 3),
+        () => Navigator.pushReplacementNamed(context, SplashScreen.routeName));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ShortSplashScreen();
   }
 }

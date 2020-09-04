@@ -137,7 +137,7 @@ class Book extends StatelessWidget {
                             children: [
                               Lottie.asset(
                                   "assets/animations/green_locator.json",
-                                  height: getProportionateScreenHeight(60)),
+                                  width: getProportionateScreenWidth(50)),
                               Center(
                                 child: Dash(
                                   dashColor: Colors.grey,
@@ -147,7 +147,7 @@ class Book extends StatelessWidget {
                                 ),
                               ),
                               Lottie.asset("assets/animations/red_locator.json",
-                                  height: getProportionateScreenHeight(60)),
+                                  width: getProportionateScreenWidth(50)),
                             ],
                           ),
                         ),
@@ -255,7 +255,7 @@ class Book extends StatelessWidget {
             alignment: Alignment.center,
             child: SvgPicture.asset(
               "assets/icons/packaging.svg",
-              height: getProportionateScreenHeight(70),
+              width: getProportionateScreenWidth(50),
             ),
           ),
           Container(
