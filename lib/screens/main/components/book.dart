@@ -11,7 +11,72 @@ import 'package:lottie/lottie.dart';
 import '../../../size_config.dart';
 import 'package:flutter/material.dart';
 
-class Book extends StatelessWidget {
+class Book extends StatefulWidget {
+  @override
+  _BookState createState() => _BookState();
+}
+
+class _BookState extends State<Book> {
+  Map<String, String> pickupAddress = {
+    'name': '',
+    'phone': '',
+    'houseno': '',
+    'area': '',
+    'city': '',
+    'landmark': '',
+    'latitude': '',
+    'longitude': '',
+  };
+  Map<String, String> dropAddress = {
+    'name': '',
+    'phone': '',
+    'houseno': '',
+    'area': '',
+    'city': '',
+    'landmark': '',
+  };
+
+  void setPickupAddress({
+    String name,
+    String phone,
+    String hourseno,
+    String area,
+    String city,
+    String landmark,
+    String latitude,
+    String longitude,
+  }) {
+    setState(() {
+      pickupAddress['name'] = name;
+      pickupAddress['phone'] = phone;
+      pickupAddress['hourseno'] = hourseno;
+      pickupAddress['area'] = area;
+      pickupAddress['city'] = city;
+      pickupAddress['landmark'] = landmark;
+      pickupAddress['latitude'] = latitude;
+      pickupAddress['longitude'] = longitude;
+    });
+  }
+
+  void setDropAddress({
+    String name,
+    String phone,
+    String hourseno,
+    String area,
+    String city,
+    String landmark,
+  }) {
+    setState(() {
+      dropAddress['name'] = name;
+      dropAddress['phone'] = phone;
+      dropAddress['hourseno'] = hourseno;
+      dropAddress['area'] = area;
+      dropAddress['city'] = city;
+      dropAddress['landmark'] = landmark;
+    });
+  }
+
+  List<String> packageType = [];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -156,14 +221,20 @@ class Book extends StatelessWidget {
                           child: Column(
                             children: [
                               buildAddAddressArea(
-                                  add: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      EnterAddressScreen.routeName,
-                                      arguments: "pickup",
-                                    );
-                                  },
-                                  heading: "PICKUP"),
+                                add: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    EnterAddressScreen.routeName,
+                                    arguments: {
+                                      "type": "pickup",
+                                      'func': setPickupAddress
+                                    },
+                                  );
+                                },
+                                heading: "PICKUP",
+                                address:
+                                    "${pickupAddress['houseno']} ${pickupAddress['area']} ${pickupAddress['city']} ${pickupAddress['landmark']}",
+                              ),
                               Container(
                                 height: 10,
                                 padding: const EdgeInsets.only(left: 10),
@@ -176,14 +247,20 @@ class Book extends StatelessWidget {
                                 ),
                               ),
                               buildAddAddressArea(
-                                  add: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      EnterAddressScreen.routeName,
-                                      arguments: "drop",
-                                    );
-                                  },
-                                  heading: "DROP"),
+                                add: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    EnterAddressScreen.routeName,
+                                    arguments: {
+                                      "type": "pickup",
+                                      'func': setDropAddress
+                                    },
+                                  );
+                                },
+                                heading: "DROP",
+                                address:
+                                    "${dropAddress['houseno']} ${dropAddress['area']} ${dropAddress['city']} ${dropAddress['landmark']}",
+                              ),
                             ],
                           ),
                         )
@@ -288,7 +365,8 @@ class Book extends StatelessWidget {
     );
   }
 
-  Container buildAddAddressArea({String heading, Function add}) {
+  Container buildAddAddressArea(
+      {String heading, Function add, String address}) {
     return Container(
       height: 100,
       width: double.infinity,
@@ -306,11 +384,12 @@ class Book extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Text(
-              "1600 Amphitheatre Pkwy, Mountain View, CA 94043, United States",
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: getProportionateScreenWidth(14)),
-            ),
+            if (address.trim().length > 0)
+              Text(
+                address,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: getProportionateScreenWidth(14)),
+              ),
             FlatButton.icon(
                 padding: EdgeInsets.only(left: -10),
                 textColor: Colors.blue,

@@ -9,11 +9,14 @@ class EnterAddressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final type = ModalRoute.of(context).settings.arguments;
+    final argData =
+        ModalRoute.of(context).settings.arguments as Map<String, Object>;
+    final type = argData['type'];
     return Scaffold(
       appBar: buildAppBar(context),
       body: Body(
         type: type,
+        setData: argData['func'],
       ),
     );
   }

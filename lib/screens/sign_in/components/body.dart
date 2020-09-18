@@ -1,3 +1,7 @@
+import 'package:E_Parcel/screens/main/main_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../../screens/opt_verify/opt_verify_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/services.dart';
@@ -56,8 +60,69 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
-  String mobNumber;
+  String mobNumber, smssent, verificationId;
+
+  get verifiedSuccess => null;
+
   final List<String> errors = [];
+
+  Future<void> verfiyPhone() async {
+    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
+      this.verificationId = verId;
+    };
+    final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResent]) {
+      this.verificationId = verId;
+    };
+    final PhoneVerificationCompleted verifiedSuccess = (AuthCredential auth) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, MainScreen.routeName, (Route<dynamic> route) => false);
+      print('DONE');
+    };
+    final PhoneVerificationFailed verifyFailed = (FirebaseAuthException e) {
+      print('ERROR ${e.message}');
+    };
+    print("+91" + mobNumber);
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: "+91" + mobNumber,
+      timeout: const Duration(seconds: 120),
+      verificationCompleted: verifiedSuccess,
+      verificationFailed: verifyFailed,
+      codeSent: smsCodeSent,
+      codeAutoRetrievalTimeout: autoRetrieve,
+    );
+  }
+
+  Future<void> signIn(String smsCode, BuildContext context) async {
+    final AuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: verificationId,
+      smsCode: smsCode,
+    );
+    await FirebaseAuth.instance
+        .signInWithCredential(credential)
+        .then((user) async {
+      print(user.user.uid + " USERID");
+      var userDoc =
+          FirebaseFirestore.instance.collection('customers').doc(user.user.uid);
+      await userDoc.get().then((value) => {
+            if (!value.exists)
+              {
+                userDoc.set({
+                  'number': user.user.phoneNumber,
+                  'accountStatus': 'normal',
+                  'createdAt': new DateTime.now(),
+                })
+              }
+          });
+
+      Navigator.pushNamedAndRemoveUntil(
+          context, MainScreen.routeName, (Route<dynamic> route) => false);
+    }).catchError((e) {
+      print("ERROR " + e.toString());
+      var message = e.message;
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     OutlineInputBorder outlineInputBorder = OutlineInputBorder(
@@ -81,7 +146,10 @@ class _SignFormState extends State<SignForm> {
               press: () {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  Navigator.pushNamed(context, OTPVerifyScreen.routeName);
+                  verfiyPhone();
+                  // registerUser(mobNumber, context);
+                  Navigator.pushNamed(context, OTPVerifyScreen.routeName,
+                      arguments: [signIn, mobNumber]);
                 }
               },
             ),
@@ -103,6 +171,10 @@ class _SignFormState extends State<SignForm> {
       onSaved: (newValue) => mobNumber = newValue,
       inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
       onChanged: (value) {
+        setState(() {
+          mobNumber = value;
+          print(mobNumber);
+        });
         if (value.isNotEmpty && errors.contains(errMobNumEmpty)) {
           setState(() {
             errors.remove(errMobNumEmpty);

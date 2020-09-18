@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "731222201821",
+    "firebase_url": "https://eparcel-e7594.firebaseio.com",
+    "project_id": "eparcel-e7594",
+    "storage_bucket": "eparcel-e7594.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731222201821:android:cf65e47c34aff4ec8a9234",
+        "android_client_info": {
+          "package_name": "com.example.E_Parcel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731222201821-9hi0so3osl78ibsunrtbj03606tsgr2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD06l7uGXTTjqAQWNpewfOhS2BFeszTlNs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731222201821-9hi0so3osl78ibsunrtbj03606tsgr2a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

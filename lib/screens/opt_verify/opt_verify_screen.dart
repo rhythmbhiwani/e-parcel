@@ -7,11 +7,15 @@ import '../../constants.dart';
 
 class OTPVerifyScreen extends StatelessWidget {
   static const String routeName = "/verify-otp";
+
   @override
   Widget build(BuildContext context) {
+    final List argumentData = ModalRoute.of(context).settings.arguments;
+    final signIn = argumentData[0];
+    final mobNum = argumentData[1];
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Body(),
+      body: Body(signIn, mobNum),
     );
   }
 

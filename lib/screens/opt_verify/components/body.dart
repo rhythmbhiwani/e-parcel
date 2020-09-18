@@ -3,11 +3,25 @@ import 'package:flutter/material.dart';
 import '../../../size_config.dart';
 import '../../../constants.dart';
 import '../../../components/default_button.dart';
-import '../../../screens/main/main_screen.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:device_info/device_info.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  final Function signIn;
+  final mobNum;
+  Body(this.signIn, this.mobNum);
+
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  var enteredOtp;
+
+  void setOtp(otp) {
+    enteredOtp = otp;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -28,20 +42,18 @@ class Body extends StatelessWidget {
                 ),
               ),
               Text(
-                "We have sent you a code to +919001285271",
+                "We have sent you a code to +91${widget.mobNum}",
                 textAlign: TextAlign.center,
               ),
-              buildTimer(),
               SizedBox(height: SizeConfig.screenHeight * 0.10),
-              OTPTextField(),
+              OTPTextField(setOtp: setOtp),
               SizedBox(height: SizeConfig.screenHeight * 0.15),
               Hero(
                 tag: "start_btn",
                 child: DefaultButton(
                   text: "Verify",
                   press: () {
-                    Navigator.pushNamedAndRemoveUntil(context,
-                        MainScreen.routeName, (Route<dynamic> route) => false);
+                    widget.signIn(enteredOtp, context);
                   },
                 ),
               ),
@@ -61,31 +73,14 @@ class Body extends StatelessWidget {
       ),
     );
   }
-
-  Row buildTimer() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text("This code will expire in "),
-        TweenAnimationBuilder(
-          tween: Tween(begin: 30.0, end: 00),
-          duration: Duration(seconds: 30),
-          builder: (context, value, child) => Text(
-            "00:${value.toInt()}",
-            style: TextStyle(color: kPrimaryColor),
-          ),
-          onEnd: () {},
-        ),
-      ],
-    );
-  }
 }
 
 class OTPTextField extends StatefulWidget {
   const OTPTextField({
     Key key,
+    this.setOtp,
   }) : super(key: key);
-
+  final Function setOtp;
   @override
   _OTPTextFieldState createState() => _OTPTextFieldState();
 }
@@ -127,7 +122,7 @@ class _OTPTextFieldState extends State<OTPTextField> {
       maxLength: 6,
       maskCharacter: maskCharacter,
       onTextChanged: (text) {
-        print(text);
+        widget.setOtp(text);
       },
       pinBoxWidth: getProportionateScreenWidth(48),
       pinBoxHeight: getProportionateScreenWidth(48),

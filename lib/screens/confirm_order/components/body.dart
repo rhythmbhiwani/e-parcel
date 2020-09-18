@@ -1,12 +1,29 @@
 import 'package:E_Parcel/constants.dart';
 import 'package:E_Parcel/size_config.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stepper_touch/stepper_touch.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  final appData = FirebaseFirestore.instance.collection("appData");
+  var baseFare;
+  getData() {
+    appData.snapshots().listen((snapshot) {
+      setState(() {
+        baseFare = snapshot.docs[0].data()['base-fare'];
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    getData();
     return Container(
       width: double.infinity,
       child: Column(
@@ -87,10 +104,12 @@ class Body extends StatelessWidget {
                                           right: 20,
                                           top: 10),
                                       child: StepperTouch(
-                                        initialValue: 1,
+                                        initialValue: 0,
                                         direction: Axis.horizontal,
                                         withSpring: true,
                                         primaryColor: kPrimaryColor,
+                                        decraseLimaition: 0,
+                                        increaseLimaition: 5,
                                         textColor: Colors.white,
                                         onChanged: (int value) =>
                                             print('new value $value'),
@@ -130,7 +149,7 @@ class Body extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      "40₹",
+                                      '$baseFare₹',
                                       style: TextStyle(
                                           fontSize:
                                               getProportionateScreenWidth(23),

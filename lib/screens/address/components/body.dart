@@ -1,25 +1,60 @@
 import 'package:E_Parcel/components/default_button.dart';
 import 'package:contact_picker/contact_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:location/location.dart';
 
 import '../../../size_config.dart';
 
 class Body extends StatefulWidget {
-  final type;
-  Body({this.type});
+  final String type;
+  final Function setData;
+  Body({this.type, this.setData});
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
+  final _formKey = GlobalKey<FormState>();
   final ContactPicker _contactPicker = new ContactPicker();
   Contact _contact;
   TextEditingController _nameController = TextEditingController();
   TextEditingController _numberController = TextEditingController();
+  String name, phone, houseno, area, city, landmark;
+  Location location = new Location();
+
+  bool _serviceEnabled;
+  PermissionStatus _permissionGranted;
+  LocationData _locationData;
+
+  void getLocation() async {
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+    var locationData = await location.getLocation();
+    setState(() {
+      _locationData = locationData;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.type == "pickup") {
+      getLocation();
+    }
     return Container(
       width: double.infinity,
       child: ListView.builder(
@@ -27,6 +62,7 @@ class _BodyState extends State<Body> {
         itemCount: 1,
         itemBuilder: (context, index) {
           return Form(
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -53,6 +89,20 @@ class _BodyState extends State<Body> {
                       padding: EdgeInsets.only(left: 20),
                       width: SizeConfig.screenWidth * 0.85,
                       child: TextFormField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter(
+                            RegExp("[a-zA-Z ]"),
+                            allow: true,
+                          )
+                        ],
+                        validator: (value) {
+                          if (value.isEmpty || value.trim().length < 1) {
+                            return "Please Enter Name";
+                          } else if (value.contains(new RegExp(r'\d'))) {
+                            return "Please Enter Valid Name";
+                          }
+                          return null;
+                        },
                         controller: _nameController,
                         decoration: InputDecoration(
                           hintText: "Name",
@@ -70,13 +120,17 @@ class _BodyState extends State<Body> {
                             Contact contact =
                                 await _contactPicker.selectContact();
                             setState(() {
-                              _contact = contact;
-                              _nameController.text = _contact.fullName;
-                              var num = _contact.phoneNumber
-                                  .toString()
-                                  .replaceAll(new RegExp(r"\s+|\D"), "");
-                              _numberController.text =
-                                  num.substring(num.length - 10);
+                              try {
+                                _contact = contact;
+                                _nameController.text = _contact.fullName;
+                                var num = _contact.phoneNumber
+                                    .toString()
+                                    .replaceAll(new RegExp(r"\s+|\D"), "");
+                                _numberController.text =
+                                    num.substring(num.length - 10);
+                              } catch (err) {
+                                print(err);
+                              }
                             });
                           }),
                     )
@@ -85,8 +139,13 @@ class _BodyState extends State<Body> {
                 buildDataTextField(
                   hint: "Phone Number",
                   icon: Icons.phone_android,
-                  type: TextInputType.number,
+                  // maxLength: 10,
+                  type: TextInputType.phone,
                   controller: _numberController,
+                  inputFormatters: [
+                    WhitelistingTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(10),
+                  ],
                 ),
                 buildDataTextField(
                   hint: "House/Flat No.",
@@ -125,7 +184,7 @@ class _BodyState extends State<Body> {
                       child: DefaultButton(
                         text: "Continue",
                         press: () {
-                          Navigator.of(context).pop();
+                          if (_formKey.currentState.validate()) {}
                         },
                       ),
                     ),
@@ -139,14 +198,21 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Container buildDataTextField(
-      {String hint,
-      IconData icon,
-      TextInputType type,
-      TextEditingController controller}) {
+  Container buildDataTextField({
+    String hint,
+    IconData icon,
+    TextInputType type,
+    TextEditingController controller,
+    Function validator,
+    Function onSaved,
+    List<TextInputFormatter> inputFormatters,
+  }) {
     return Container(
       padding: EdgeInsets.only(left: 20, top: 30, right: 20),
       child: TextFormField(
+        inputFormatters: inputFormatters,
+        onSaved: onSaved,
+        validator: validator,
         controller: controller,
         keyboardType: type,
         decoration: InputDecoration(

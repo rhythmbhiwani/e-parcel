@@ -1,3 +1,5 @@
+import 'package:E_Parcel/screens/splash/splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../constants.dart';
@@ -206,11 +208,12 @@ class _BodyState extends State<Body> {
         child: Column(
           children: <Widget>[
             Container(
-              // width: sidebarSize / 2.5,
-              // height: sidebarSize / 2.5,
+              width: sidebarSize / 3,
+              height: sidebarSize / 3,
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: kPrimaryColor,
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(100),
               ),
               child: SvgPicture.asset(
                 logoPath,
@@ -283,6 +286,11 @@ class _BodyState extends State<Body> {
             iconData: Icons.exit_to_app,
             textSize: getSize(4),
             height: (menuContainerHeight) / 5,
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.pushNamedAndRemoveUntil(
+                  context, SplashScreen.routeName, (route) => false);
+            },
           ),
         ],
       ),
