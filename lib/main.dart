@@ -60,7 +60,7 @@ class _SplashNavigatorState extends State<SplashNavigator> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 2),
+        const Duration(seconds: 2),
         () => Navigator.pushReplacementNamed(context,
             widget.isLoggedIn ? MainScreen.routeName : SplashScreen.routeName));
   }
