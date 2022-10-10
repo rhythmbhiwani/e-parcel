@@ -48,9 +48,7 @@ class _MainScreenState extends State<MainScreen> {
         TabData(
             iconData: Icons.add_circle,
             title: "Book",
-            onclick: () {
-              changeWidget(GetWidgets.bookWidget(), true);
-            }),
+            onclick: () => changeWidget(GetWidgets.bookWidget(), true)),
         TabData(iconData: Icons.history, title: "History")
       ],
       onTabChangedListener: (position) {
