@@ -34,3 +34,6 @@ OutlineInputBorder outlineInputBorder() {
     borderSide: BorderSide(color: kTextColor),
   );
 }
+
+const String starEmoji = "⭐️";
+const String lockEmoji = "🔒";

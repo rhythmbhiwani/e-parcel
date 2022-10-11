@@ -101,11 +101,11 @@ class _OTPTextFieldState extends State<OTPTextField> {
     var skdInt = androidDeviceInfo.version.sdkInt;
     if (skdInt > 19) {
       setState(() {
-        maskCharacter = "🔒";
+        maskCharacter = lockEmoji;
       });
     } else {
       setState(() {
-        maskCharacter = "⭐️";
+        maskCharacter = starEmoji;
       });
     }
   }
